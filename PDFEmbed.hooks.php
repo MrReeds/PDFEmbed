@@ -187,7 +187,7 @@ class PDFEmbed
             $pdfFile = MediaWikiServices::getInstance()->getRepoGroup()->findFile($filename);
 
             if ($pdfFile !== false) {
-                $url = $pdfFile->getFullUrl();
+                $url = isset($_SERVER['HTTPS']) ? str_replace("http:", "https:", $pdfFile->getFullUrl()) : $pdfFile->getFullUrl();
                 return self::embed($url, $width, $height, $page, $iframe);
             } else {
                 return self::error('embed_pdf_invalid_file', $filename);
